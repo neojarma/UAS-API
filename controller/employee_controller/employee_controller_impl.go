@@ -24,7 +24,7 @@ func (controller *EmployeeControllerImpl) Register(ctx echo.Context) error {
 	if err := ctx.Bind(bodyRequest); err != nil {
 		return ctx.JSON(http.StatusBadRequest, &response.GeneralReponse{
 			Code:    http.StatusBadRequest,
-			Message: "Bad Request",
+			Message: err.Error(),
 			Data:    nil,
 		})
 	}
@@ -32,7 +32,7 @@ func (controller *EmployeeControllerImpl) Register(ctx echo.Context) error {
 	if err := controller.EmployeeService.Register(bodyRequest); err != nil {
 		return ctx.JSON(http.StatusBadRequest, &response.GeneralReponse{
 			Code:    http.StatusBadRequest,
-			Message: "Bad Request",
+			Message: err.Error(),
 			Data:    nil,
 		})
 	}

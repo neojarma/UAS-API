@@ -25,7 +25,7 @@ func (controller *PhoneControllerImpl) AllPhone(ctx echo.Context) error {
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, &response.GeneralReponse{
 			Code:    http.StatusBadRequest,
-			Message: "Bad Request",
+			Message: err.Error(),
 		})
 	}
 
@@ -37,13 +37,13 @@ func (controller *PhoneControllerImpl) AllPhone(ctx echo.Context) error {
 }
 
 func (controller *PhoneControllerImpl) FindPhoneByType(ctx echo.Context) error {
-	typeRequest := ctx.Param("type")
+	typeRequest := ctx.QueryParam("type")
 	result, err := controller.PhoneService.FindPhoneByType(typeRequest)
 
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, &response.GeneralReponse{
 			Code:    http.StatusBadRequest,
-			Message: "Bad Request",
+			Message: err.Error(),
 		})
 	}
 
@@ -55,13 +55,13 @@ func (controller *PhoneControllerImpl) FindPhoneByType(ctx echo.Context) error {
 }
 
 func (controller *PhoneControllerImpl) FindPhoneBySerialNumber(ctx echo.Context) error {
-	typeRequest := ctx.Param("serialNumber")
+	typeRequest := ctx.QueryParam("serialNumber")
 	result, err := controller.PhoneService.FindPhoneBySerialNumber(typeRequest)
 
 	if err != nil {
 		return ctx.JSON(http.StatusBadRequest, &response.GeneralReponse{
 			Code:    http.StatusBadRequest,
-			Message: "Bad Request",
+			Message: err.Error(),
 		})
 	}
 

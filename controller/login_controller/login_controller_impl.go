@@ -25,7 +25,7 @@ func (controller *LoginControllerImpl) Login(ctx echo.Context) error {
 	if err := ctx.Bind(bodyRequest); err != nil {
 		return ctx.JSON(http.StatusBadRequest, &response.GeneralReponse{
 			Code:    http.StatusBadRequest,
-			Message: "Bad Request",
+			Message: err.Error(),
 			Data:    nil,
 		})
 	}
@@ -33,7 +33,7 @@ func (controller *LoginControllerImpl) Login(ctx echo.Context) error {
 	if err := controller.LoginService.Login(bodyRequest); err != nil {
 		return ctx.JSON(http.StatusBadRequest, &response.GeneralReponse{
 			Code:    http.StatusBadRequest,
-			Message: "Bad Request",
+			Message: err.Error(),
 			Data:    nil,
 		})
 	}

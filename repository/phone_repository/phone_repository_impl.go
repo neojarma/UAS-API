@@ -2,6 +2,8 @@ package phonerepository
 
 import (
 	"database/sql"
+	"errors"
+	"fmt"
 	"uas_neoj/model/domain"
 )
 
@@ -32,6 +34,10 @@ func (repository *phoneRepositoryImpl) AllPhone(db *sql.DB) ([]*domain.PhoneDoma
 		phones = append(phones, &phone)
 	}
 
+	if len(phones) == 0 {
+		return nil, errors.New("there is no phones in the database")
+	}
+
 	return phones, nil
 }
 
@@ -55,6 +61,11 @@ func (repository *phoneRepositoryImpl) FindPhoneByType(db *sql.DB, phoneType str
 		phones = append(phones, &phone)
 	}
 
+	if len(phones) == 0 {
+		errMessage := fmt.Sprintf("there is no phones with %s type in the database", phoneType)
+		return nil, errors.New(errMessage)
+	}
+
 	return phones, nil
 }
 
@@ -73,9 +84,10 @@ func (repository *phoneRepositoryImpl) FindPhoneBySerialNumber(db *sql.DB, phone
 		if err != nil {
 			return nil, err
 		}
+		return &phone, nil
 	}
 
-	return &phone, nil
+	return nil, errors.New("there is no phones with this serial number")
 }
 
 func (repository *phoneRepositoryImpl) CreateProductionPhone(db *sql.DB, phone *domain.PhoneDomain) (*domain.PhoneDomain, error) {
