@@ -16,7 +16,7 @@ func main() {
 		panic(err)
 	}
 
-	group := e.Group("/api")
+	group := e.Group("/api/v1")
 	router.Router(group, db)
 
 	port := ":" + os.Getenv("PORT")

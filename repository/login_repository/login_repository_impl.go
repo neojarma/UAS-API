@@ -42,7 +42,7 @@ func (repository *loginRepositoryImpl) CreateLogin(db *sql.DB, login *domain.Log
 	_, err := db.Exec(SQL, login.Username, login.Password)
 
 	if err != nil {
-		return nil, err
+		return nil, errors.New("username already exist")
 	}
 
 	return login, nil
