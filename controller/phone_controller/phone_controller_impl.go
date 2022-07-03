@@ -1,6 +1,7 @@
 package phonecontroller
 
 import (
+	"fmt"
 	"net/http"
 	"uas_neoj/model/request"
 	"uas_neoj/model/response"
@@ -55,7 +56,9 @@ func (controller *PhoneControllerImpl) FindPhoneByType(ctx echo.Context) error {
 }
 
 func (controller *PhoneControllerImpl) FindPhoneBySerialNumber(ctx echo.Context) error {
-	typeRequest := ctx.QueryParam("serialNumber")
+	typeRequest := ctx.QueryParam("serial")
+
+	fmt.Println(typeRequest)
 	result, err := controller.PhoneService.FindPhoneBySerialNumber(typeRequest)
 
 	if err != nil {

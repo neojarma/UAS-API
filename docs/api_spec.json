@@ -267,7 +267,7 @@
           }
         }
       },
-      "/phones/serial?serialNumber={serial}" : {
+      "/phone/serial?serial={serial}" : {
         "get" : {
           "tags": ["Phones"],
           "summary": "get specific phone data with serial number",
