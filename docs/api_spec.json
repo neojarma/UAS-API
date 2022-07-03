@@ -598,6 +598,66 @@
             }
           }
         }
+      },
+      "/token" : {
+        "post" : {
+          "tags": ["Token"],
+          "summary": "refresh access token",
+          "requestBody" : {
+            "content": {
+              "application/json" : {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "refreshToken" : {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200" : {
+              "description": "success renew access token",
+              "content": {
+                "application/json" : {
+                  "schema" : {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      },
+                      "data" : {
+                        "type": "object",
+                        "properties": {
+                          "accessIssuedAt" : {
+                            "type": "string"
+                          },
+                          "accessExpiresAt" : {
+                            "type": "string"
+                          },
+                          "accessToken" : {
+                            "type": "string"
+                          },
+                          "accessRefreshToken" : {
+                            "type": "string"
+                          },
+                          "refreshExpiresAt" : {
+                            "type": "string"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
 }
