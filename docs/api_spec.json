@@ -1,0 +1,602 @@
+{
+    "openapi":"3.0.2",
+    "info": {
+      "title":"UAS API Documentation",
+      "description": "Neo Jarmawijaya - 2042006",
+      "version":"1.0"
+    },
+    "servers": [
+      {"url":"http:localhost:8081/api/v1"}
+    ],
+    "components": {
+      "securitySchemes": {
+        "bearerAuth": {
+          "type": "http",
+          "scheme": "bearer",
+          "bearerFormat": "JWT"
+        }
+      }
+    },
+    "paths": {
+      "/employee/register" :{
+        "post" : {
+          "tags": ["Register"],
+          "summary": "Register Endpoint",
+          "requestBody":{
+            "content": {
+              "application/json" : {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "fullName" : {
+                      "type": "string"
+                    },
+                    "address" : {
+                      "type": "string"
+                    },
+                    "phoneNumber" : {
+                      "type": "string"
+                    },
+                    "username":{
+                      "type": "string"
+                    },
+                    "password":{
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200" : {
+              "description": "success register",
+              "content": {
+                "application/json" : {
+                  "schema" : {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      },
+                      "data" : {
+                          "type": "object",
+                          "properties": {
+                            "fullName" : {
+                              "type": "string"
+                            },
+                            "address" : {
+                              "type": "string"
+                            },
+                            "phoneNumber" : {
+                              "type": "string"
+                            },
+                            "username":{
+                              "type": "string"
+                            },
+                            "password":{
+                              "type": "string"
+                            }
+                          }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400" : {
+              "description": "failed register",
+              "content": {
+                "application/json" : {
+                  "schema" : {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/login" : {
+          "post" : {
+            "tags": ["Login"],
+            "summary": "Login Endpoint",
+            "requestBody":{
+              "content": {
+                "application/json" : {
+                  "schema":{
+                    "type": "object",
+                    "properties": {
+                      "username":{
+                        "type": "string"
+                      },
+                      "password":{
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "responses": {
+              "200" : {
+                "description": "success login",
+                "content": {
+                  "application/json" : {
+                    "schema" : {
+                      "type": "object",
+                      "properties": {
+                        "code" : {
+                          "type": "number"
+                        },
+                        "status" : {
+                          "type": "string"
+                        },
+                        "data" : {
+                          "type": "object",
+                          "properties": {
+                            "accessIssuedAt" : {
+                              "type": "string"
+                            },
+                            "accessExpiresAt" : {
+                              "type": "string"
+                            },
+                            "accessToken" : {
+                              "type": "string"
+                            },
+                            "accessRefreshToken" : {
+                              "type": "string"
+                            },
+                            "refreshExpiresAt" : {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "401" : {
+                "description": "failed login",
+                "content": {
+                  "application/json" : {
+                    "schema" : {
+                      "type": "object",
+                      "properties": {
+                        "code" : {
+                          "type": "number"
+                        },
+                        "status" : {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+      },
+      "/phones/type?type={type}" : {
+        "get" : {
+          "tags": ["Phones"],
+          "summary": "get specific phone data with phone type",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "type",
+              "schema" : {
+                "type": "string"
+              },
+              "description": "phone type e.g. Android / IOS"
+            }
+          ],
+          "responses": {
+            "200" : {
+              "description": "success get data",
+              "content": {
+                "application/json" : {
+                  "schema" : {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      },
+                      "data":{
+                        "type": "array",
+                        "items" :{
+                          "type": "object",
+                          "properties": {
+                            "idProduction" : {
+                              "type": "string"
+                            },
+                            "phoneName" : {
+                              "type": "string"
+                            },
+                            "phoneType" : {
+                              "type": "string"
+                            },
+                            "serialNumber" : {
+                              "type": "string"
+                            },
+                            "productionDate" : {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400" : {
+              "description": "no phone with this type",
+              "content": {
+                "application/json" : {
+                  "schema" : {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/phones/serial?serialNumber={serial}" : {
+        "get" : {
+          "tags": ["Phones"],
+          "summary": "get specific phone data with serial number",
+          "parameters": [
+            {
+              "in": "query",
+              "name": "serial",
+              "schema" : {
+                "type": "string"
+              },
+              "description": "phone serial number"
+            }
+          ],
+          "responses": {
+            "200" : {
+              "description": "success get data",
+              "content": {
+                "application/json" : {
+                  "schema" : {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      },
+                      "data":{
+                        "type": "object",
+                          "properties": {
+                            "idProduction" : {
+                              "type": "string"
+                            },
+                            "phoneName" : {
+                              "type": "string"
+                            },
+                            "phoneType" : {
+                              "type": "string"
+                            },
+                            "serialNumber" : {
+                              "type": "string"
+                            },
+                            "productionDate" : {
+                              "type": "string"
+                            }
+                          }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400" : {
+              "description": "no phone with this serial number",
+              "content": {
+                "application/json" : {
+                  "schema" : {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/phones" : {
+        "get" : {
+          "tags": ["Phones"],
+          "summary": "get all phones data",
+          "responses": {
+            "200" : {
+              "description": "success get data",
+              "content": {
+                "application/json" : {
+                  "schema" : {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      },
+                      "data":{
+                        "type": "array",
+                        "items" :{
+                          "type": "object",
+                          "properties": {
+                            "idProduction" : {
+                              "type": "string"
+                            },
+                            "phoneName" : {
+                              "type": "string"
+                            },
+                            "phoneType" : {
+                              "type": "string"
+                            },
+                            "serialNumber" : {
+                              "type": "string"
+                            },
+                            "productionDate" : {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            },
+            "400" : {
+              "description": "no phones data",
+              "content": {
+                "application/json" : {
+                  "schema" : {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/phone" : {
+        "post" : {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": ["Phones"],
+          "summary": "create new phone",
+          "requestBody":{
+            "content": {
+              "application/json" : {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "phoneName" : {
+                      "type": "string"
+                    },
+                    "phoneType" : {
+                      "type": "string"
+                    },
+                    "serialNumber" : {
+                      "type": "string"
+                    },
+                    "productionDate" : {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200" : {
+              "description": "success create data",
+              "content": {
+                "application/json" : {
+                  "schema" : {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      },
+                      "data":{
+                        "type": "object",
+                          "properties": {
+                            "idProduction" : {
+                              "type": "string"
+                            },
+                            "phoneName" : {
+                              "type": "string"
+                            },
+                            "phoneType" : {
+                              "type": "string"
+                            },
+                            "serialNumber" : {
+                              "type": "string"
+                            },
+                            "productionDate" : {
+                              "type": "string"
+                            }
+                          }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "put" : {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "tags": ["Phones"],
+          "summary": "success update data",
+          "requestBody":{
+            "content": {
+              "application/json" : {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "idProduction" : {
+                      "type": "string"
+                    },
+                    "phoneName" : {
+                      "type": "string"
+                    },
+                    "phoneType" : {
+                      "type": "string"
+                    },
+                    "serialNumber" : {
+                      "type": "string"
+                    },
+                    "productionDate" : {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "200" : {
+              "description": "success create data",
+              "content": {
+                "application/json" : {
+                  "schema" : {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      },
+                      "data":{
+                        "type": "object",
+                          "properties": {
+                            "idProduction" : {
+                              "type": "string"
+                            },
+                            "phoneName" : {
+                              "type": "string"
+                            },
+                            "phoneType" : {
+                              "type": "string"
+                            },
+                            "serialNumber" : {
+                              "type": "string"
+                            },
+                            "productionDate" : {
+                              "type": "string"
+                            }
+                          }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "/phone/{prodId}" : {
+        "delete" : {
+          "security": [
+            {
+              "bearerAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "required": true,
+              "in": "path",
+              "name": "prodId",
+              "schema" : {
+                "type": "string"
+              },
+              "description": "production Id"
+            }
+          ],
+          "tags": ["Phones"],
+          "summary": "delete phone with production Id",
+          "responses": {
+            "200" : {
+              "description": "success delete data",
+              "content": {
+                "application/json" : {
+                  "schema" : {
+                    "type": "object",
+                    "properties": {
+                      "code" : {
+                        "type": "number"
+                      },
+                      "status" : {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+}
