@@ -2,9 +2,11 @@ package router
 
 import (
 	"database/sql"
+	"uas_neoj/authentication"
 	employeecontroller "uas_neoj/controller/employee_controller"
 	logincontroller "uas_neoj/controller/login_controller"
 	phonecontroller "uas_neoj/controller/phone_controller"
+	tokencontroller "uas_neoj/controller/token_controller"
 	employeerepository "uas_neoj/repository/employee_repository"
 	loginrepository "uas_neoj/repository/login_repository"
 	phonerepository "uas_neoj/repository/phone_repository"
@@ -18,8 +20,14 @@ import (
 func Router(group *echo.Group, db *sql.DB) {
 	loginRouter(group, db)
 	employeeRouter(group, db)
-	docs(group)
 	phoneRouter(group, db)
+	docs(group)
+	token(group)
+}
+
+func token(group *echo.Group) {
+	tokenController := tokencontroller.NewTokenController()
+	group.POST("/token", tokenController.RefreshToken)
 }
 
 func phoneRouter(group *echo.Group, db *sql.DB) {
@@ -27,12 +35,12 @@ func phoneRouter(group *echo.Group, db *sql.DB) {
 	phoneService := phoneservice.NewPhoneService(phoneRepo, db)
 	phoneController := phonecontroller.NewPhoneController(phoneService)
 
-	group.GET("/phones", phoneController.AllPhone)
+	group.GET("/phones", phoneController.AllPhone, authentication.IsLoggedIn)
 	group.GET("/phones/type", phoneController.FindPhoneByType)
 	group.GET("/phone/serial", phoneController.FindPhoneBySerialNumber)
-	group.POST("/phone", phoneController.CreateProductionPhone)
-	group.PUT("/phone", phoneController.EditProductionPhone)
-	group.DELETE("/phone/:productionId", phoneController.DeleteProductionPhone)
+	group.POST("/phone", phoneController.CreateProductionPhone, authentication.IsLoggedIn)
+	group.PUT("/phone", phoneController.EditProductionPhone, authentication.IsLoggedIn)
+	group.DELETE("/phone/:productionId", phoneController.DeleteProductionPhone, authentication.IsLoggedIn)
 }
 
 func loginRouter(group *echo.Group, db *sql.DB) {
