@@ -35,7 +35,7 @@ func phoneRouter(group *echo.Group, db *sql.DB) {
 	phoneService := phoneservice.NewPhoneService(phoneRepo, db)
 	phoneController := phonecontroller.NewPhoneController(phoneService)
 
-	group.GET("/phones", phoneController.AllPhone, authentication.IsLoggedIn)
+	group.GET("/phones", phoneController.AllPhone)
 	group.GET("/phones/type", phoneController.FindPhoneByType)
 	group.GET("/phone/serial", phoneController.FindPhoneBySerialNumber)
 	group.POST("/phone", phoneController.CreateProductionPhone, authentication.IsLoggedIn)
